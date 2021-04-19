@@ -1,0 +1,176 @@
+import requests
+import html5lib
+from bs4 import BeautifulSoup
+import sys
+import urllib
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.base import MIMEBase
+from email import encoders
+from datetime import datetime
+import os
+
+
+now = datetime.now()
+stdoutOrigin = sys.stdout
+response1 = requests.get("https://www.foxnews.com/world")
+response2 = requests.get("https://www.bbc.com/news/world")
+response3 = requests.get("https://www.npr.org/sections/world")
+response4 = requests.get("https://www.apnews.com/hub/ap-top-news")
+response5 = requests.get("https://www.washingtonpost.com/world/?hp_top_nav_world")
+response6 = requests.get("https://www.reuters.com/world")
+response7 = requests.get("https://abcnews.go.com/International")
+soup1 = BeautifulSoup(response1.text, "html.parser")
+soup2 = BeautifulSoup(response2.text, "html.parser")
+soup3 = BeautifulSoup(response3.text, "html.parser")
+soup4 = BeautifulSoup(response4.text, "html.parser")
+soup5 = BeautifulSoup(response5.text, "html.parser")
+soup6 = BeautifulSoup(response6.text, "html.parser")
+soup7 = BeautifulSoup(response7.text, "html.parser")
+fn_stories1 = soup1.find_all("div", {"class": "collection-spotlight-cards"})
+fn_stories2 = soup1.find_all("div", {"class": "collection-spotlight"})
+bbc_stories1 = soup2.find_all("div", {"class": "gs-c-promo"})
+npr_stories = soup3.find_all("div", {"class": "item-info-wrap"})
+apnews_stories = soup4.find_all("div", {"class": "FeedCard"})
+wpnews_stories = soup5.find_all("div", {"class": "col-lg-8"})
+reuters_stories1 = soup6.find_all("div", {"class": "StoryCollection__hero__"})
+reuters_stories2 = soup6.find_all("div", {"class": "StoryCollection__story___"})
+abc_stories1 = soup7.find_all("li", {"class": "LatestHeadlines__item"})
+abc_stories2 = soup7.find_all("div", {"class": "ContentList__Item"})
+article_ctr = 0
+
+sys.stdout = open("Top_World_News.txt", "w+")
+
+print("Fox News:")
+for story in fn_stories1:
+	headline = story.find("h2")
+	article_ctr += 1
+	print("{}." .format(article_ctr) + headline.text)
+	link = story.find("a")
+	print(link["href"])
+	summary = story.find("p")
+	if summary:
+		print(summary.text)
+
+for story in fn_stories2:
+	headline = story.find("h2")
+	article_ctr +=1
+	print("{}." .format(article_ctr) + headline.text)
+	link = story.find("a")
+	print(link["href"])
+	summary = story.find("p")
+	if summary:
+		print(summary.text)
+
+print("\nBBC News:")
+for story in bbc_stories1:
+	headline = story.find("h3")
+	article_ctr += 1
+	print("{}." .format(article_ctr) + headline.text)
+	link = story.find("a")
+	print("www.bbc.com" + link["href"])
+	summary = story.find("p")
+	if summary:
+		print(summary.text)
+
+print("\nNPR News:")
+for story in npr_stories:
+	headline = story.find("h2")
+	article_ctr += 1
+	print("{}." .format(article_ctr) + headline.text)
+	link = story.find("a")
+	print(link["href"])
+	summary = story.find("p", {"class": "teaser"})
+	if summary:
+		print(summary.text)
+
+print("\nAP News:")
+for story in apnews_stories:
+	headline = story.find("h1")
+	article_ctr += 1
+	print("{}." .format(article_ctr) + headline.text)
+	link = story.find("a")
+	print("www.apnews.com" + link["href"])
+	summary = story.find("p")
+	if summary: 
+		print(summary.text)
+
+print("\nWashington Post News:")
+for story in wpnews_stories:
+	headline = story.find("a")
+	article_ctr += 1
+	print("{}." .format(article_ctr) + headline.text)
+	link = story.find("a")
+	print(link["href"])
+	summary = story.find("div", {"class": "blurb"})
+	if summary:
+		print(summary.text)
+
+print("\nABC News:")
+for story in abc_stories1:
+	headline = story.find("h4")
+	article_ctr += 1
+	print("{}." .format(article_ctr) + headline.text)
+	link = story.find("a")
+	print(link["href"])
+	summary = story.find("p")
+	if summary:
+		print(summary.text)
+
+for story in abc_stories2:
+	headline = story.find("h2")
+	article_ctr += 1
+	print("{}." .format(article_ctr) + headline.text)
+	link = story.find("a")
+	print(link["href"])
+	summary = story.find("p")
+	if summary:
+		print(summary.text)
+
+print("\nReuters News:")
+for story in reuters_stories1:
+	headline = story.find("span", {"class": "MediaStoryCard__title"})
+	article_ctr += 1 
+	print("{}." .format(article_ctr) + headline.text)
+	link = story.find("a")
+	print("https://www.reuters.com" + link["href"])
+	summary = story.find("p")
+	if summary:
+		print(summary.text)
+
+for story in reuters_stories2:
+	headline = story.find("h6")
+	article_ctr += 1
+	print("{}." .format(article_ctr) + headline.text)
+	link = story.find("a")
+	print("https://www.retuers.com" + link["href"])
+	summary = story.find("p")
+	if summary:
+		print(summary.text)
+
+# SEND ALL NEWS THROUGH EMAIL
+password = os.getenv("password")
+fromaddr = os.getenv("fromaddr") # HIDE IF USING REPLIT OR OTHER PUBLIC SITES
+toaddr = input("Please enter the recipient's email address here:")
+msg = MIMEMultipart()
+msg["From"] = fromaddr
+msg["To"] = toaddr
+msg["Subject"] = "Top World News From:" + " " + now.strftime("%m/%d/%Y %I:%M:%S %p")
+body = "The text file contains the top world news from Fox News, BBC, NPR, AP News, Washington Post, and ABC News."
+msg.attach(MIMEText(body,"plain"))
+filename = "Top_World_News.txt"
+attachment = open(r"C:\Users\heeja\Desktop\Top_World_News.txt", "rb") #r (rawstring marker) is a prefix
+p = MIMEBase("application", "octet-stream")
+p.set_payload((attachment).read())
+encoders.encode_base64(p)
+p.add_header("Content-Disposition", "attachment; filename= %s" % filename)
+msg.attach(p)
+sender_email_id = os.getenv("sender_email_id") # HIDE IF USING REPLIT OR OTHER PUBLIC SITES
+sender_email_id_password = os.getenv("sender_email_id_password") # HIDE IF USING REPLIT OR OTHER PUBLIC SITES
+s = smtplib.SMTP("smtp.gmail.com", 587) # 587 is the port for Gmail ONLY
+s.starttls()
+s.login(fromaddr, sender_email_id_password)
+text = msg.as_string()
+s.sendmail(fromaddr, toaddr, text)
+s.quit()
