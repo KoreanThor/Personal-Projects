@@ -25,9 +25,9 @@ rand_num = range(1,10)
 hd_tl = ["Heads", "Tails"]
 bot = commands.Bot(command_prefix="!")
 embed = discord.Embed()
-commands = ("!commands", "!hello", "!lunch", "!dinner", "!number", "!coinflip", "!joke", "!time","!pwmaker")
+commands = ("!commands", "!hello", "!lunch", "!dinner", "!number", "!coinflip", "!joke", "!time","!pwmaker","!aww","!memes","!pfd","!wcgw","!youtube","!google")
 pizza_counter = 0
-activity = discord.Game(name = " with ur mum LUL")
+activity = discord.Game(name = "Away From Keyboard")
 
 
 
@@ -99,11 +99,6 @@ async def on_message(message):
 	  global pizza_counter
 	  pizza_counter += 1
 	  await message.channel.send("{} slices of 🍕 have been eaten so far!" .format(pizza_counter))
-  
-  elif message.content.startswith("!nut"):
-    global nut_counter
-    nut_counter += 1
-    await message.channel.send("{} people have hit the nut button so far." .format(nut_counter))
 
     # Embed Links for Youtube and Google
   elif message.content.startswith("!youtube"):
@@ -164,8 +159,3 @@ async def on_message(message):
 
 ### TOKEN ###
 client.run(os.getenv("TOKEN"))
-
-
-
-
-
