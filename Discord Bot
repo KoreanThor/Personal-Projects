@@ -16,7 +16,7 @@ import asyncpraw
 import aiohttp
 from aiohttp import ClientSession
 
-
+#Authentication for Discord and 
 TOKEN = os.getenv("TOKEN")
 client = discord.Client()
 food_list = ["pizza 🍕", "lasagna", "a cheeseburger 🍔", "tacos 🌮", "a burrito 🌯", "spaghetti 🍝", "pad thai", "pho", "barbeque", "fried chicken 🍗", "sushi 🍣", "ice cream 🍦", "curry", "a sandwich 🥪", "steak 🥩", "mac and cheese" ,"a microwave dinner", "nothing (get rekt)", "a PB&J Sandwhich", "a salad 🥗", "Chinese food", "pancakes 🥞", "chicken and waffles", "hot dogs 🌭", "chicken tendies", "enchiladas", "Korean BBQ", "a gyro 🥙", "chicken nuggets", "a cheesesteak sandwich", "a burrito bowl", "a banh mi", "ramen 🍜", "a poke bowl", "fish and chips"]
@@ -25,8 +25,10 @@ rand_num = range(1,10)
 hd_tl = ["Heads", "Tails"]
 bot = commands.Bot(command_prefix="!")
 embed = discord.Embed()
+commands = ("!commands", "!hello", "!lunch", "!dinner", "!number", "!coinflip", "!joke", "!time","!pwmaker")
 pizza_counter = 0
-activity = discord.Game(name = "Tetris")
+activity = discord.Game(name = " with ur mum LUL")
+
 
 
 ### Time Zones ###
@@ -66,9 +68,9 @@ async def on_ready():
 async def on_message(message):
   if message.author == client.user:
     return
-    
+
   elif message.content.startswith("!commands"):
-    await message.channel.send("Check out these commands on this channel: \n!hello \n!memes (This will produce five new memes from r/memes subreddit.) \n!pfd (This will produce five new posts from r/PeopleFuckingDying.) \n!aww (This will provide five new posts from r/aww.) \n!wcgw (This will provide five new posts from r/Whatcouldgowrong.) \n!lunch (This will choose a random food for you to eat for lunch.) \n!dinner (This will choose a random food for you to eat for dinner) \n!number (This will think of a number 1-10.) \n!coinflip (This will flip a coin for you.) \n!joke (This will tell a random dad joke.) \n!time (This will display the current time for 4 American time zones.) \n!pizza (This will show how many pizza slices have been eaten.) \n!pwmaker (This will generate a random 16 character password and send it to you in a DM.) \n!youtube (This will provide a link to Youtube.) \n!google (This will provide a link to Google.) \nMore commands will be available in the future! We are currently working on an Apex Legends map rotation timer and an Apex Legends Stats command.")
+    await message.channel.send("Check out these commands on this channel: \n!hello \n!memes (This will produce five of the newest memes from r/memes subreddit.) \n!pfd (This will produce five of the newest posts from r/PeopleFuckingDying.) \n!aww (This will provide five of the newest posts from r/aww.) \n!wcgw (This will provide five of the newest posts from r/Whatcouldgowrong.) \n!lunch (This will choose a random food for you to eat for lunch.) \n!dinner (This will choose a random food for you to eat for dinner) \n!number (This will think of a number 1-10.) \n!coinflip (This will flip a coin for you.) \n!joke (This will tell a random dad joke.) \n!time (This will display the current time for 4 American time zones.) \n!pizza (This will show how many pizza slices have been eaten.) \n!pwmaker (This will generate a random 16 character password and send it to you in a private DM.) \n!youtube (This will provide a link to Youtube.) \n!google (This will provide a link to Google.) \nMore commands will be available in the future! Stay tuned!")
 
   elif message.content.startswith("!dinner"):
     await message.channel.send("{0} is eating {1} for dinner!" .format(message.author, random.choice(food_list)))
@@ -83,10 +85,10 @@ async def on_message(message):
   elif message.content.startswith("!time"):
     await message.channel.send("Current PDT date and time is: {0}. \nCurrent MDT date and time is: {1}. \nCurrent CST date and time is: {2}. \nCurrent EST date and time is: {3}." .format(dt_CA, dt_CO, dt_IL, dt_NY))
 
-  
+ 
   elif message.content.startswith("!coinflip"):
     await message.channel.send("The 🪙 landed on {}!" .format(random.choice(hd_tl)))
-
+    
   elif message.content.startswith("!hello"):
     await message.channel.send("Hello {}!👋" .format(message.author))
 
@@ -97,6 +99,11 @@ async def on_message(message):
 	  global pizza_counter
 	  pizza_counter += 1
 	  await message.channel.send("{} slices of 🍕 have been eaten so far!" .format(pizza_counter))
+  
+  elif message.content.startswith("!nut"):
+    global nut_counter
+    nut_counter += 1
+    await message.channel.send("{} people have hit the nut button so far." .format(nut_counter))
 
     # Embed Links for Youtube and Google
   elif message.content.startswith("!youtube"):
