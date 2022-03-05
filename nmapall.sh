@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/bin/bash
 
 echo 'Initial nmap scan beginning...' 
 echo 'Please enter the target IP address:'  
