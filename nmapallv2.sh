@@ -2,7 +2,7 @@
 
 #Initial Nmap Scan (flags can be changed based on preference) 
 echo 'Initial nmap scan beginning...' 
-echo 'Please enter the target IP address:'  
+echo 'Please enter the target IP address or URL:'  
 read IP 
 #File Path (ex: /home/steven/Documents/htb/filename)
 echo 'Please enter your desired file path and filename:' 
