@@ -8,10 +8,10 @@ read filename
 parent=$(dirname $filename) 
 nmap -sC -sV -O $IP -oA $filename  
 
-echo -e '\nAll ports scan beginning...' 
+echo -e '\nAll ports scan beginning...This may take a while...' 
 nmap -p- -sV $IP --max-retries 4 
 
-echo -e '\nUDP scan beginning...' 
+echo -e '\nUDP scan beginning...This may take a while...' 
 nmap -sV -sU $IP --max-retries 4 
 
 echo -e '\nAll nmap scans complete!'
