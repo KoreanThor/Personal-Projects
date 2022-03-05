@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 #Python World News Scraper
 
 import requests
