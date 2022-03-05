@@ -3,8 +3,9 @@
 echo 'Initial nmap scan beginning...' 
 echo 'Please enter the target IP address:'  
 read IP 
-echo 'Please enter your desired filename:' 
+echo 'Please enter your desired file path and filename:' 
 read filename 
+parent=$(dirname $filename) 
 nmap -sC -sV -O $IP -oA $filename  
 
 echo -e '\nAll ports scan beginning...' 
