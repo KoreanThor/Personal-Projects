@@ -29,4 +29,3 @@ sleep 1
 echo "Goodbye."
 
 bash -c "exit"
-
